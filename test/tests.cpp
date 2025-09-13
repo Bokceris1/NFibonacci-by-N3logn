@@ -1,7 +1,7 @@
 #include "nfib.h"
 
-#include <gtest/gtest.h>
 #include <boost/multiprecision/cpp_int.hpp>
+#include <gtest/gtest.h>
 
 using namespace boost::multiprecision;
 
@@ -67,51 +67,50 @@ TEST(correctness, 5_10element) {
 }
 
 TEST(correctness, 7test) {
-    for (size_t j = 6; j < 30; ++j)
-    {
+  for (size_t j = 6; j < 30; ++j) {
     EXPECT_EQ((fib<size_t, 7>(j)), (fib_correct<size_t, 7>(j)));
-    }
+  }
 }
 
 TEST(correctness, bigtest1) {
   size_t j = 10000;
   EXPECT_EQ((fib<cpp_int, 10>(j)), (fib_correct<cpp_int, 10>(j)));
-  //std::cout << fib<cpp_int, 10>(j) << "\n";
+  // std::cout << fib<cpp_int, 10>(j) << "\n";
 }
 
 TEST(correctness, bigtest2) {
   size_t j = 10000;
   EXPECT_EQ((fib<cpp_int, 10>(j)), (fib_correct<cpp_int, 10>(j)));
-  //std::cout << fib<cpp_int, 10>(j) << "\n";
+  // std::cout << fib<cpp_int, 10>(j) << "\n";
 }
 
 TEST(correctness, bigtest4) {
   size_t j = 100000;
   EXPECT_EQ((fib<cpp_int, 2>(j)), (fib_correct<cpp_int, 2>(j)));
-  //std::cout << fib<cpp_int, 2>(j) << "\n";
+  // std::cout << fib<cpp_int, 2>(j) << "\n";
 }
 
 TEST(correctness, bigtest5) {
-  //size_t j = 1000000;
-  //std::cout << fib<cpp_int, 2>(j) << "\n";
+  // size_t j = 1000000;
+  // std::cout << fib<cpp_int, 2>(j) << "\n";
 }
 
 TEST(correctness, bigtest6) {
   size_t j = 1000;
   EXPECT_EQ((fib<cpp_int, 100>(j)), (fib_correct<cpp_int, 100>(j)));
-  //std::cout << fib<cpp_int, 100>(j) << "\n";
+  // std::cout << fib<cpp_int, 100>(j) << "\n";
 }
 
 TEST(correctness, bigtest_matrix) {
   for (size_t j = 0; j < 1000; ++j) {
-    //std::cout << j << "\n";
+    // std::cout << j << "\n";
     EXPECT_EQ((fib<cpp_int, 30>(j)), (fib_correct<cpp_int, 30>(j)));
   }
 }
 
 TEST(correctness, bigtest_iterative) {
   for (size_t j = 0; j < 1000; ++j) {
-    //std::cout << j << "\n";
+    // std::cout << j << "\n";
     EXPECT_EQ((fib_iterative<cpp_int, 30>(j)), (fib_correct<cpp_int, 30>(j)));
   }
 }
@@ -123,12 +122,12 @@ TEST(correctness, bigtest_matrix_2) {
   }
 }
 
-//TEST(correctness, bigtest_iterative_2) {
-//  for (size_t j = 0; j < 1000000; j += 200000) {
-//    // std::cout << j << "\n";
-//    fib_iterative<cpp_int, 2>(j);
-//  }
-//}
+// TEST(correctness, bigtest_iterative_2) {
+//   for (size_t j = 0; j < 1000000; j += 200000) {
+//     // std::cout << j << "\n";
+//     fib_iterative<cpp_int, 2>(j);
+//   }
+// }
 
 TEST(correctness, very_big) {
   size_t j = 1000000000;

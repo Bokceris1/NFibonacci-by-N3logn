@@ -1,12 +1,13 @@
 #pragma once
 
+#include <boost/multiprecision/cpp_int.hpp>
+
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
+#include <iostream>
 #include <iterator>
 #include <numeric>
-#include <iostream>
-#include <boost/multiprecision/cpp_int.hpp>
 
 using namespace boost::multiprecision;
 
@@ -118,57 +119,54 @@ IntType fib_iterative(size_t n) {
 
 template <typename IntType>
 IntType fib_impl(size_t n) {
-    IntType a = 0, b = 1;
-    IntType bit = 1;
-    
-    while (bit <= n / 2) {
-        bit <<= 1;
-    }
+  IntType a = 0, b = 1;
+  IntType bit = 1;
 
-    while (bit > 0) {
-        IntType c = a * (2 * b - a); 
-        IntType d = a * a + b * b; 
-        if (n & bit) {
-            a = d;
-            b = c + d;
-        } else {
-            a = c;
-            b = d;
-        }
-        bit >>= 1;
+  while (bit <= n / 2) {
+    bit <<= 1;
+  }
+
+  while (bit > 0) {
+    IntType c = a * (2 * b - a);
+    IntType d = a * a + b * b;
+    if (n & bit) {
+      a = d;
+      b = c + d;
+    } else {
+      a = c;
+      b = d;
     }
-    return a;
+    bit >>= 1;
+  }
+  return a;
 }
 
 template <typename IntType, size_t N>
 IntType fib(size_t n) {
-	if (n == 0) {
-	    return 0;
-	}
+  if (n == 0) {
+    return 0;
+  }
 
-    if (N == 2) {
-      return fib_impl<IntType>(n - 1);
-    }
+  if (N == 2) {
+    return fib_impl<IntType>(n - 1);
+  }
 
-    if (n <= N) {
-      return 1;
-    }
+  if (n <= N) {
+    return 1;
+  }
 
-    if (pow(N, 3) * log2(n) > N * n) {
-      return fib_iterative<IntType, N>(n);
-    }
+  if (pow(N, 3) * log2(n) > N * n) {
+    return fib_iterative<IntType, N>(n);
+  }
 
-    SquareMatrix matrix = genBase<IntType, N>();
+  SquareMatrix matrix = genBase<IntType, N>();
 
-    SquareMatrix powered = matrix.pow(n - N - 1);
+  SquareMatrix powered = matrix.pow(n - N - 1);
 
-    IntType sum = 0;
-    for (size_t i = 0; i < N; ++i) {
-      sum += powered[0, i];
-    }
+  IntType sum = 0;
+  for (size_t i = 0; i < N; ++i) {
+    sum += powered[0, i];
+  }
 
-    return sum;
+  return sum;
 }
-
-
-
